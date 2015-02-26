@@ -9,14 +9,17 @@ $materia = new Materia();
 switch ($operacion) {
     case 'crear':
 // Crear Materia
-        
+
         $materia->setIdmateria(filter_input(INPUT_POST, 'idmateria'));
         $materia->setNombre(filter_input(INPUT_POST, 'nombre'));
         $materia->setDescripcion(filter_input(INPUT_POST, 'descripcion'));
-        print_r($materia);
         
         if (isset($materia)) {
-            $materia->agregar($materia);
+            try {
+                $materia->agregar($materia);
+            } catch (Exception $exc) {
+                echo $exc->getTraceAsString();
+            }
             header("Location: materia_lista.php");
         } else {
             echo 'Error al crear materia';
